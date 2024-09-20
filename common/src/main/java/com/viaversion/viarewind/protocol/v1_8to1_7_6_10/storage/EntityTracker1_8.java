@@ -25,7 +25,6 @@ import com.viaversion.viaversion.api.connection.UserConnection;
 import com.viaversion.viaversion.api.minecraft.entities.EntityType;
 import com.viaversion.viaversion.api.minecraft.entities.EntityTypes1_8;
 import com.viaversion.viaversion.api.minecraft.entitydata.EntityData;
-import com.viaversion.viaversion.api.minecraft.item.Item;
 import com.viaversion.viaversion.api.protocol.packet.PacketWrapper;
 import com.viaversion.viaversion.api.type.Types;
 import com.viaversion.viaversion.data.entity.EntityTrackerBase;
@@ -187,20 +186,12 @@ public class EntityTracker1_8 extends EntityTrackerBase {
 		this.clientEntityGameMode = clientEntityGameMode;
 	}
 
-	public void updateEntityData(List<EntityData> entityData) {
-		entityData.removeIf(first -> entityData.stream().anyMatch(second -> first.id() == second.id()));
-		for (final EntityData data : entityData) {
-			final Object value = data.value();
-			if (value instanceof Item item) {
-				entityData.add(new EntityData(data.id(), data.dataType(), item.copy()));
-			} else {
-				entityData.add(new EntityData(data.id(), data.dataType(), value));
-			}
-		}
-	}
-
 	public List<EntityData> getEntityData() {
 		return entityData;
+	}
+
+	public void setEntityData(List<EntityData> entityData) {
+		this.entityData = entityData;
 	}
 
 }
